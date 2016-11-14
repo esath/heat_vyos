@@ -1,0 +1,29 @@
+heat_template_version: 2013-05-23
+
+description: Simple template to deploy a stack one instance. Asks for info.
+
+parameters:
+  image_name_1: 
+    type: string 
+    label: Image Name 
+    description: Image name for instance1 
+    default: VYOS_router
+  network_id:
+    type: string
+    label: Network-name
+    description: Network to be used for the instance
+  key_name1:
+    type: string
+    label: Keypair
+    description: Keypair to be used for the instance
+
+resources: 
+  heat_instance:
+    type: OS::Nova::Server 
+    properties: 
+      image: VYOS_router 
+      flavor: sonera.linux.micro
+      key_name: { get_param: key_name1 } 
+      networks:
+        - network : { get_param : network_id }
+
